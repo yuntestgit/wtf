@@ -1,0 +1,281 @@
+<div id="main" style="height:850px;overflow-y:scroll">
+
+    <% if(device[0].id==null){ %>
+
+    暫無資料請先點擊右方按鈕新增資料
+
+    <% }else{ %>
+    <div style="margin-top: 10px"></div>
+    <table id="example">
+        <thead>
+            <tr>
+                <th>識別碼</th>
+                <th>設備名稱</th>
+                <th>頭部角度</th>
+                <th>腿部角度</th>
+                <th>整床高度</th>
+                <th></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <% for(x=0;x<device.length;x++) {%>
+            <tr>
+                <td><%= device[x].Mac %></td>
+
+                <% if(device[x].Name == null) {%>
+                <td>暫無</td>
+                <% }else{ %>
+                <td><%= device[x].Name %></td>
+                <% } %>
+
+                <% if(device[x].Threshold == null) {%>
+                <td>暫無</td>
+                <td>暫無</td>
+                <td>暫無</td>
+                <% }else{ %>
+                <% var w = JSON.parse(device[x].Threshold) %>
+
+                <% if(w[0] == "NULL") {%>
+                    <td>暫無</td>
+                    <% }else{ %>
+                    <td><%= w[0] %></td>
+                    <% } %>
+
+                    <% if(w[1] == "NULL") {%>
+                    <td>暫無</td>
+                    <% }else{ %>
+                    <td><%= w[1] %></td>
+                    <% } %>
+
+                    <% if(w[2] == "NULL") {%>
+                    <td>暫無</td>
+                    <% }else{ %>
+                    <td><%= w[2] %></td>
+                    <% } %>
+
+                <% } %>
+
+                <td>
+                    <button type="button" class="btn btn-info" data-toggle="modal"
+                        data-target="#threshold-<%= device[x].Mac%>">設定</button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="threshold-<%= device[x].Mac%>" tabindex="-1" role="dialog"
+                        aria-labelledby="<%= device[x].Mac%>-Label" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:800px">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="<%= device[x].Mac %>-Label">
+                                        <span style="font-size: 25px;font-style:italic"><%= device[x].Name %> 告警值</span>
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="javascript:bed_threshold('<%= device[x].Mac %>')">
+                                        <script>
+                                            var mac = JSON.parse('<%- JSON.stringify(device[x].Mac) %>');
+                                            // console.log(mac);
+                                        </script>
+                                        <% if(device[x].Threshold==null) {%>
+                                        <div>
+                                            <label for="head-<%= device[x].Mac %>" class="col-form-label">頭部角度：</label>
+                                            <input type="number" style="width: 70%" value="0" min="0"
+                                                id="head-<%= device[x].Mac %>" required disabled>
+                                            <input type="checkbox" id="head-c-<%= device[x].Mac %>"
+                                                onclick="head_c('<%= device[x].Mac %>')" checked>不設定
+                                        </div>
+                                        <div>
+                                            <label for="foot-<%= device[x].Mac %>" class="col-form-label">腿部角度：</label>
+                                            <input type="number" style="width: 70%" value="0" min="0"
+                                                id="foot-<%= device[x].Mac %>" required disabled>
+                                            <input type="checkbox" id="foot-c-<%= device[x].Mac %>"
+                                                onclick="foot_c('<%= device[x].Mac %>')" checked>不設定
+                                        </div>
+                                        <div>
+                                            <label for="bed-<%= device[x].Mac %>"
+                                                class="col-form-label">整床高度：</label>
+                                            <input type="number" style="width: 70%" value="0" min="0"
+                                                id="bed-<%= device[x].Mac %>" required disabled>
+                                            <input type="checkbox" id="bed-c-<%= device[x].Mac %>"
+                                                onclick="bed_c('<%= device[x].Mac %>')" checked>不設定
+                                        </div>
+                                        
+                                        <% }else{ %>
+                                        <% var qq=JSON.parse(device[x].Threshold) %>
+                                        <div>
+                                            <label for="head-<%= device[x].Mac %>" class="col-form-label">頭部角度：</label>
+                                            <% if(qq[0]=="NULL") {%>
+                                            <input type="number" style="width: 70%" value="0" min="0"
+                                                id="head-<%= device[x].Mac %>" required disabled>
+                                            <input type="checkbox" id="head-c-<%= device[x].Mac %>"
+                                                onclick="head_c('<%= device[x].Mac %>')" checked>不設定
+                                            <% }else{ %>
+                                            <input type="number" style="width: 70%" value="<%= qq[0] %>" min="0"
+                                                id="head-<%= device[x].Mac %>" required>
+                                            <input type="checkbox" id="head-c-<%= device[x].Mac %>"
+                                                onclick="head_c('<%= device[x].Mac %>')">不設定
+                                            <% } %>
+                                        </div>
+
+                                        <div>
+                                            <label for="foot-<%= device[x].Mac %>" class="col-form-label">腿部角度：</label>
+                                            <% if(qq[1]=="NULL") {%>
+                                            <input type="number" style="width: 70%" value="0" min="0"
+                                                id="foot-<%= device[x].Mac %>" required disabled>
+                                            <input type="checkbox" id="foot-c-<%= device[x].Mac %>"
+                                                onclick="foot_c('<%= device[x].Mac %>')" checked>不設定
+                                            <% }else{ %>
+                                            <input type="number" style="width: 70%" value="<%= qq[1] %>" min="0"
+                                                id="foot-<%= device[x].Mac %>" required>
+                                            <input type="checkbox" id="foot-c-<%= device[x].Mac %>"
+                                                onclick="foot_c('<%= device[x].Mac %>')">不設定
+                                            <% } %>
+                                        </div>
+
+                                        <div>
+                                            <label for="bed-<%= device[x].Mac %>"
+                                                class="col-form-label">整床高度：</label>
+                                            <% if(qq[2]=="NULL") {%>
+                                            <input type="number" style="width: 70%" value="0" min="0"
+                                                id="bed-<%= device[x].Mac %>" required disabled>
+                                            <input type="checkbox" id="bed-c-<%= device[x].Mac %>"
+                                                onclick="bed_c('<%= device[x].Mac %>')" checked>不設定
+                                            <% }else{ %>
+                                            <input type="number" style="width: 70%" value="<%= qq[2] %>" min="0"
+                                                id="bed-<%= device[x].Mac %>" required>
+                                            <input type="checkbox" id="bed-c-<%= device[x].Mac %>"
+                                                onclick="bed_c('<%= device[x].Mac %>')">不設定
+                                            <% } %>
+                                        </div>
+
+                                        <% } %>
+
+                                        <script>
+                                            function head_c(mac) {
+                                                var fc = document.getElementById("head-c-" + mac).checked;
+                                                if (fc == true) {
+                                                    // document.getElementById("head-"+mac).setAttribute("readonly",true);
+                                                    // document.getElementById("head-"+mac).value=0;
+                                                    document.getElementById("head-" + mac).setAttribute("disabled", true);
+                                                    document.getElementById("head-" + mac).value = 0;
+                                                } else {
+                                                    // document.getElementById("head-"+mac).removeAttribute("readonly");
+                                                    document.getElementById("head-" + mac).removeAttribute("disabled");
+                                                }
+                                            };
+
+                                            function foot_c(mac) {
+                                                var bc = document.getElementById("foot-c-" + mac).checked;
+                                                if (bc == true) {
+                                                    // document.getElementById("foot-"+mac).setAttribute("readonly",true);
+                                                    // document.getElementById("foot-"+mac).value=0;
+                                                    document.getElementById("foot-" + mac).setAttribute("disabled", true);
+                                                    document.getElementById("foot-" + mac).value = 0;
+                                                } else {
+                                                    // document.getElementById("foot-"+mac).removeAttribute("readonly");
+                                                    document.getElementById("foot-" + mac).removeAttribute("disabled");
+                                                }
+                                            };
+
+                                            function bed_c(mac) {
+                                                var hc = document.getElementById("bed-c-" + mac).checked;
+                                                if (hc == true) {
+                                                    // document.getElementById("bed-"+mac).setAttribute("readonly",true);
+                                                    // document.getElementById("bed-"+mac).value=0;
+                                                    document.getElementById("bed-" + mac).setAttribute("disabled", true);
+                                                    document.getElementById("bed-" + mac).value = 0;
+                                                } else {
+                                                    // document.getElementById("bed-"+mac).removeAttribute("readonly");
+                                                    document.getElementById("bed-" + mac).removeAttribute("disabled");
+                                                }
+                                            };
+                                        </script>
+
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">確認</button>
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">取消</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>
+                        function bed_threshold(mac) {
+                            var head = parseInt(document.getElementById("head-" + mac).value);
+                            var fc = document.getElementById("head-c-" + mac).checked;
+                            var foot = parseInt(document.getElementById("foot-" + mac).value);
+                            var bc = document.getElementById("foot-c-" + mac).checked;
+                            var bed = parseInt(document.getElementById("bed-" + mac).value);
+                            var hc = document.getElementById("bed-c-" + mac).checked;
+                            if (fc == true) {
+                                head = 'NULL';
+                            }
+                            if (bc == true) {
+                                foot = 'NULL';
+                            }
+                            if (hc == true) {
+                                bed = 'NULL';
+                            }
+                            // console.log(head + "/" + foot + "/" + bed);
+                            $.post("/modify/threshold", { type: 'bed', mac: mac, head: head, foot: foot, bed: bed,}, function (data) {
+                                if (data == "修改告警值成功") {
+                                    // location.reload();
+                                    $("#threshold-"+mac).modal('hide');
+                                    setTimeout(function(){
+                                        gothreshold('2','床');
+                                    },200);
+                                } else {
+                                    alert("修改告警值失敗");
+                                }
+                            }, "text");
+                        }
+                    </script>
+
+                </td>
+
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+
+    <script>
+
+        $(document).ready(function () {
+            $('#example').DataTable({
+                language: {
+                    search: "搜尋：",
+                    sProcessing: "处理中...",
+                    sLengthMenu: "显示 _MENU_ 项结果",
+                    sZeroRecords: "没有匹配结果",
+                    sInfo: "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                    sInfoEmpty: "显示第 0 至 0 项结果，共 0 项",
+                    sInfoFiltered: "(由 _MAX_ 项结果过滤)",
+                    sInfoPostFix: "",
+                    sSearch: "搜索:",
+                    sEmptyTable: "表中数据为空",
+                    sLoadingRecords: "载入中...",
+                    sInfoThousands: ",",
+                    oPaginate: {
+                        sFirst: "首页",
+                        sPrevious: "上页",
+                        sNext: "下页",
+                        sLast: "末页"
+                    },
+                    oAria: {
+                        "sSortAscending": ": 以升排列",
+                        "sSortDescending": ": 以降排列"
+                    }
+                }
+            });
+        });
+    </script>
+
+    <% } %>
+</div>

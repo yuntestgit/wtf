@@ -1,0 +1,115 @@
+<div class="main" id="main">
+        <div class="borderButtonContianer">
+            <div class="iconButton borderButton">
+                <img src="../model/iconButton/pic/manage-individual.png" alt="個人管理" />
+                <div class="text" href="#action_single">個人管理</div>
+            </div>
+
+            <div class="iconButton borderButton">
+                <img src="../model/iconButton/pic/manage-group.png" alt="群組管理" />
+                <div class="text" href="#action_group">群組管理</div>
+            </div>
+        </div>
+
+        <div class="roomPatientContainer">
+            <% if(floor[0].Number == null){ %>
+                <span style="font-size: 20px">
+                    <% if (language==0){%>
+                        暫無資料<br>請點擊右上方設置新增資料
+                    <% }else if (language==1){%>
+                        暂无资料<br>请点击右上方设置新增资料
+                    <% }else if (language==2){%>
+                        No data available<br>Please click on the top right to set up new information.
+                    <% }%>
+                </span>
+            <% }else{ %>
+                <% for(var mf=0;mf< floor.length;mf++) {%>
+                    <% for(var mr=0;mr< room.length;mr++) {%>
+                        <% if(room[mr].FloorNumber == floor[mf].Number) {%>
+                            <% for(var par=0;par<patient.length;par++) {%> 
+                                <% if(patient[par].Room==room[mr].Number) {%>
+                                    <% for(th=0;th<threshold.length;th++){ %>
+                                        <div>
+                                        <% if(patient[par].Username==threshold[th][0].Username) {%>
+                                            <% 
+                                                <!-- console.log(threshold[th][0].Username); -->
+                                                var threshold_value = JSON.parse(threshold[th][0].Threshold);
+                                                <!-- console.log(sleeptape_detail[th]); -->
+                                                var warnings=0;
+                                                var flagv=0;
+                                                <!-- console.log(threshold_value); -->
+                                                var t3data = sleeptape_detail[th]; 
+                                            %>
+                                            <% if(threshold_value != null){ %>
+                                                <%  for(t3=0;t3<t3data.length;t3++) {
+                                                        flagv=0;
+                                                        if(threshold_value[0]!="NULL" && flagv==0 ){
+                                                            if(t3data[t3].Breathe>threshold_value[0]){
+                                                                warnings++;
+                                                                flagv=1;
+                                                            }
+                                                        }
+                                                        if(threshold_value[1]!="NULL" && flagv==0 ){
+                                                            if(t3data[t3].Bloodoxygen>threshold_value[1]){
+                                                                warnings++;
+                                                                flagv=1;
+                                                            }
+                                                        }
+                                                        if(threshold_value[2]!="NULL" && flagv==0 ){
+                                                            if(t3data[t3].Heartrate>threshold_value[2]){
+                                                                warnings++;
+                                                                flagv=1;
+                                                            }
+                                                        }
+                                                    }
+                                                <!-- console.log("warnings:"+warnings);  -->
+                                                %>
+                                                <% if(warnings>=1) {%>
+                                                    <!-- <button id='<%= patient[par].Username %>' class="123 btn btn-secondary"
+                                                        onclick="getpatientdata('<%= room[mr].FloorNumber %>','<%= patient[par].Room %>','<%= patient[par].Username %>','<%= language %>')"
+                                                        role="button" style="width:200px;color:black;background-color:rgb(206, 36, 36);margin: 5px"> -->
+                                                    <div class="patientGroup" id="<%=room[mr].FloorNumber %>">
+                                                        <div id='<%= patient[par].Username %>' class="patient alarm" onclick="getpatientdata('<%= room[mr].FloorNumber %>','<%= patient[par].Room %>','<%= patient[par].Username %>','<%= language %>')"
+                                                            role="button" >
+                                                            <div class="content alarm">
+                                                                <div class="number"><%= patient[par].Room %></div>
+                                                                <div class="name"><%= patient[par].Username %></div>
+                                                            </div>
+                                                        </div> 
+                                                    </div>
+                                                <% }else{ %>
+                                                    <!-- <button id='<%= patient[par].Username %>' class="btn btn-secondary"
+                                                            onclick="getpatientdata('<%= room[mr].FloorNumber %>','<%= patient[par].Room %>','<%= patient[par].Username %>','<%= language %>')"
+                                                            role="button" style="width:200px;color:black;background-color:lightgreen;margin: 5px"> -->
+                                                    <div class="patientGroup"  id="<%=room[mr].FloorNumber %>">
+                                                        <div id='<%= patient[par].Username %>' class="patient" onclick="getpatientdata('<%= room[mr].FloorNumber %>','<%= patient[par].Room %>','<%= patient[par].Username %>','<%= language %>')"
+                                                            role="button" >
+                                                            <div class="content">
+                                                                <div class="number"><%= patient[par].Room %></div>
+                                                                <div class="name"><%= patient[par].Username %></div>
+                                                            </div>
+                                                        </div>  
+                                                    </div>
+                                                <% } %>
+                                            <% }else{ %>
+                                                <div class="patientGroup"  id="<%=room[mr].FloorNumber %>">
+                                                    <div id='<%= patient[par].Username %>' class="patient" onclick="getpatientdata('<%= room[mr].FloorNumber %>','<%= patient[par].Room %>','<%= patient[par].Username %>','<%= language %>')"
+                                                        role="button" >
+                                                        <div class="content">
+                                                            <div class="number"><%= patient[par].Room %></div>
+                                                            <div class="name"><%= patient[par].Username %></div>
+                                                        </div>
+                                                    </div>  
+                                                </div>
+                                            <% } %>
+                                        <% } %>
+                                        </div>
+                                    <% } %>
+                                <% } %>
+                            <% } %>
+                        <% } %>
+                    <% } %>
+                <% } %>
+            <% } %>
+        </div>
+    </div>

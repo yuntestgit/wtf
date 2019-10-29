@@ -1,0 +1,475 @@
+<div id="main" style="height:850px;overflow-y:scroll">
+
+    <% if(device[0].id==null){ %>
+
+    暫無資料請先點擊右方按鈕新增資料
+
+    <% }else{ %>
+    <div style="margin-top: 10px"></div>
+    <table id="example">
+        <thead>
+            <tr>
+                <th>識別碼</th>
+                <th>設備名稱</th>
+                <th>濕度</th>
+                <th>溫度</th>
+                <th>PM2.0</th>
+                <th>二氧化碳</th>
+                <th>甲醛</th>
+                <th>揮發性氣體</th>
+                <th>電量</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(x=0;x<device.length;x++) {%>
+            <tr>
+                <td><%= device[x].Mac %></td>
+
+                <% if(device[x].Name == null) {%>
+                <td>暫無</td>
+                <% }else{ %>
+                <td><%= device[x].Name %></td>
+                <% } %>
+
+                <% if(device[x].Threshold == null) {%>
+                <td>暫無</td>
+                <td>暫無</td>
+                <td>暫無</td>
+                <td>暫無</td>
+                <td>暫無</td>
+                <td>暫無</td>
+                <td>暫無</td>
+                <% }else{ %>
+                <% var w = JSON.parse(device[x].Threshold) %>
+
+                    <% if(w[0] == "NULL") {%>
+                    <td>暫無</td>
+                    <% }else{ %>
+                    <td><%= w[0] %></td>
+                    <% } %>
+
+                    <% if(w[1] == "NULL") {%>
+                    <td>暫無</td>
+                    <% }else{ %>
+                    <td><%= w[1] %></td>
+                    <% } %>
+
+                    <% if(w[2] == "NULL") {%>
+                    <td>暫無</td>
+                    <% }else{ %>
+                    <td><%= w[2] %></td>
+                    <% } %>
+
+                    <% if(w[3] == "NULL") {%>
+                    <td>暫無</td>
+                    <% }else{ %>
+                    <td><%= w[3] %></td>
+                    <% } %>
+
+                    <% if(w[4] == "NULL") {%>
+                    <td>暫無</td>
+                    <% }else{ %>
+                    <td><%= w[4] %></td>
+                    <% } %>
+
+                    <% if(w[5] == "NULL") {%>
+                    <td>暫無</td>
+                    <% }else{ %>
+                    <td><%= w[5] %></td>
+                    <% } %>
+
+                    <% if(w[6] == "NULL") {%>
+                    <td>暫無</td>
+                    <% }else{ %>
+                    <td><%= w[6] %></td>
+                    <% } %>
+
+                <% } %>
+
+                <td>
+                    <button type="button" class="btn btn-info" data-toggle="modal"
+                        data-target="#threshold-<%= device[x].Mac%>">設定</button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="threshold-<%= device[x].Mac%>" tabindex="-1" role="dialog"
+                        aria-labelledby="<%= device[x].Mac%>-Label" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:800px">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="<%= device[x].Mac %>-Label">
+                                        <span style="font-size: 25px;font-style:italic"><%= device[x].Name %> 告警值</span>
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="javascript:airquality_threshold('<%= device[x].Mac %>')">
+                                        <script>
+                                            var mac = JSON.parse('<%- JSON.stringify(device[x].Mac) %>');
+                                            // console.log(mac);
+                                        </script>
+                                        <% if(device[x].Threshold==null) {%>
+                                        <div>
+                                            <label for="wet-<%= device[x].Mac %>" class="col-form-label">濕度：</label>
+                                            <input type="number" style="width: 70%" value="0" min="0"
+                                                id="wet-<%= device[x].Mac %>" required disabled>
+                                            <input type="checkbox" id="wet-c-<%= device[x].Mac %>"
+                                                onclick="wet_c('<%= device[x].Mac %>')" checked>不設定
+                                        </div>
+                                        <div>
+                                            <label for="temp-<%= device[x].Mac %>" class="col-form-label">溫度：</label>
+                                            <input type="number" style="width: 70%" value="0" min="0"
+                                                id="temp-<%= device[x].Mac %>" required disabled>
+                                            <input type="checkbox" id="temp-c-<%= device[x].Mac %>"
+                                                onclick="temp_c('<%= device[x].Mac %>')" checked>不設定
+                                        </div>
+                                        <div>
+                                            <label for="pm-<%= device[x].Mac %>"
+                                                class="col-form-label">PM2.0：</label>
+                                            <input type="number" style="width: 70%" value="0" min="0"
+                                                id="pm-<%= device[x].Mac %>" required disabled>
+                                            <input type="checkbox" id="pm-c-<%= device[x].Mac %>"
+                                                onclick="pm_c('<%= device[x].Mac %>')" checked>不設定
+                                        </div>
+                                        <div>
+                                            <label for="co2-<%= device[x].Mac %>" class="col-form-label">二氧化碳：</label>
+                                            <input type="number" style="width: 70%" value="0" min="0"
+                                                id="co2-<%= device[x].Mac %>" required disabled>
+                                            <input type="checkbox" id="co2-c-<%= device[x].Mac %>"
+                                                onclick="co2_c('<%= device[x].Mac %>')" checked>不設定
+                                        </div>
+                                        <div>
+                                            <label for="cha-<%= device[x].Mac %>" class="col-form-label">甲醛：</label>
+                                            <input type="number" style="width: 70%" value="0" min="0"
+                                                id="cha-<%= device[x].Mac %>" required disabled>
+                                            <input type="checkbox" id="cha-c-<%= device[x].Mac %>"
+                                                onclick="cha_c('<%= device[x].Mac %>')" checked>不設定
+                                        </div>
+                                        <div>
+                                            <label for="tvoc-<%= device[x].Mac %>" class="col-form-label">揮發性氣體：</label>
+                                            <input type="number" style="width: 70%" value="0" min="0"
+                                                id="tvoc-<%= device[x].Mac %>" required disabled>
+                                            <input type="checkbox" id="tvoc-c-<%= device[x].Mac %>"
+                                                onclick="tvoc_c('<%= device[x].Mac %>')" checked>不設定
+                                        </div>
+                                        <div>
+                                            <label for="wat-<%= device[x].Mac %>" class="col-form-label">電量：</label>
+                                            <input type="number" style="width: 70%" value="0" min="0"
+                                                id="wat-<%= device[x].Mac %>" required disabled>
+                                            <input type="checkbox" id="wat-c-<%= device[x].Mac %>"
+                                                onclick="wat_c('<%= device[x].Mac %>')" checked>不設定
+                                        </div>
+                                        <% }else{ %>
+                                        <% var qq=JSON.parse(device[x].Threshold) %>
+                                        <div>
+                                            <label for="wet-<%= device[x].Mac %>" class="col-form-label">濕度：</label>
+                                            <% if(qq[0]=="NULL") {%>
+                                            <input type="number" style="width: 70%" value="0" min="0"
+                                                id="wet-<%= device[x].Mac %>" required disabled>
+                                            <input type="checkbox" id="wet-c-<%= device[x].Mac %>"
+                                                onclick="wet_c('<%= device[x].Mac %>')" checked>不設定
+                                            <% }else{ %>
+                                            <input type="number" style="width: 70%" value="<%= qq[0] %>" min="0"
+                                                id="wet-<%= device[x].Mac %>" required>
+                                            <input type="checkbox" id="wet-c-<%= device[x].Mac %>"
+                                                onclick="wet_c('<%= device[x].Mac %>')">不設定
+                                            <% } %>
+                                        </div>
+
+                                        <div>
+                                            <label for="temp-<%= device[x].Mac %>" class="col-form-label">溫度：</label>
+                                            <% if(qq[1]=="NULL") {%>
+                                            <input type="number" style="width: 70%" value="0" min="0"
+                                                id="temp-<%= device[x].Mac %>" required disabled>
+                                            <input type="checkbox" id="temp-c-<%= device[x].Mac %>"
+                                                onclick="temp_c('<%= device[x].Mac %>')" checked>不設定
+                                            <% }else{ %>
+                                            <input type="number" style="width: 70%" value="<%= qq[1] %>" min="0"
+                                                id="temp-<%= device[x].Mac %>" required>
+                                            <input type="checkbox" id="temp-c-<%= device[x].Mac %>"
+                                                onclick="temp_c('<%= device[x].Mac %>')">不設定
+                                            <% } %>
+                                        </div>
+
+                                        <div>
+                                            <label for="pm-<%= device[x].Mac %>"
+                                                class="col-form-label">PM2.0：</label>
+                                            <% if(qq[2]=="NULL") {%>
+                                            <input type="number" style="width: 70%" value="0" min="0"
+                                                id="pm-<%= device[x].Mac %>" required disabled>
+                                            <input type="checkbox" id="pm-c-<%= device[x].Mac %>"
+                                                onclick="pm_c('<%= device[x].Mac %>')" checked>不設定
+                                            <% }else{ %>
+                                            <input type="number" style="width: 70%" value="<%= qq[2] %>" min="0"
+                                                id="pm-<%= device[x].Mac %>" required>
+                                            <input type="checkbox" id="pm-c-<%= device[x].Mac %>"
+                                                onclick="pm_c('<%= device[x].Mac %>')">不設定
+                                            <% } %>
+                                        </div>
+
+                                        <div>
+                                            <label for="co2-<%= device[x].Mac %>" class="col-form-label">二氧化碳：</label>
+                                            <% if(qq[3]=="NULL") {%>
+                                            <input type="number" style="width: 70%" value="0" min="0"
+                                                id="co2-<%= device[x].Mac %>" required disabled>
+                                            <input type="checkbox" id="co2-c-<%= device[x].Mac %>"
+                                                onclick="co2_c('<%= device[x].Mac %>')" checked>不設定
+                                            <% }else{ %>
+                                            <input type="number" style="width: 70%" value="<%= qq[3] %>" min="0"
+                                                id="co2-<%= device[x].Mac %>" required>
+                                            <input type="checkbox" id="co2-c-<%= device[x].Mac %>"
+                                                onclick="co2_c('<%= device[x].Mac %>')">不設定
+                                            <% } %>
+                                            
+                                        </div>
+
+                                        <div>
+                                            <label for="cha-<%= device[x].Mac %>" class="col-form-label">甲醛：</label>
+                                            <% if(qq[4]=="NULL") {%>
+                                            <input type="number" style="width: 70%" value="0" min="0"
+                                                id="cha-<%= device[x].Mac %>" required disabled>
+                                            <input type="checkbox" id="cha-c-<%= device[x].Mac %>"
+                                                onclick="cha_c('<%= device[x].Mac %>')" checked>不設定
+                                            <% }else{ %>
+                                            <input type="number" style="width: 70%" value="<%= qq[4] %>" min="0"
+                                                id="cha-<%= device[x].Mac %>" required>
+                                            <input type="checkbox" id="cha-c-<%= device[x].Mac %>"
+                                                onclick="cha_c('<%= device[x].Mac %>')">不設定
+                                            <% } %>
+                                            
+                                        </div>
+
+                                        <div>
+                                            <label for="tvoc-<%= device[x].Mac %>" class="col-form-label">揮發性氣體：</label>
+                                            <% if(qq[5]=="NULL") {%>
+                                            <input type="number" style="width: 70%" value="0" min="0"
+                                                id="tvoc-<%= device[x].Mac %>" required disabled>
+                                            <input type="checkbox" id="tvoc-c-<%= device[x].Mac %>"
+                                                onclick="tvoc_c('<%= device[x].Mac %>')" checked>不設定
+                                            <% }else{ %>
+                                            <input type="number" style="width: 70%" value="<%= qq[5] %>" min="0"
+                                                id="tvoc-<%= device[x].Mac %>" required>
+                                            <input type="checkbox" id="tvoc-c-<%= device[x].Mac %>"
+                                                onclick="tvoc_c('<%= device[x].Mac %>')">不設定
+                                            <% } %>
+                                            
+                                        </div>
+
+                                        <div>
+                                            <label for="wat-<%= device[x].Mac %>" class="col-form-label">電量：</label>
+                                            <% if(qq[6]=="NULL") {%>
+                                            <input type="number" style="width: 70%" value="0" min="0"
+                                                id="wat-<%= device[x].Mac %>" required disabled>
+                                            <input type="checkbox" id="wat-c-<%= device[x].Mac %>"
+                                                onclick="wat_c('<%= device[x].Mac %>')" checked>不設定
+                                            <% }else{ %>
+                                            <input type="number" style="width: 70%" value="<%= qq[6] %>" min="0"
+                                                id="wat-<%= device[x].Mac %>" required>
+                                            <input type="checkbox" id="wat-c-<%= device[x].Mac %>"
+                                                onclick="wat_c('<%= device[x].Mac %>')">不設定
+                                            <% } %>
+                                            
+                                        </div>
+                                        <% } %>
+
+                                        <script>
+                                            function wet_c(mac) {
+                                                var wetc = document.getElementById("wet-c-" + mac).checked;
+                                                if (wetc == true) {
+                                                    // document.getElementById("wet-"+mac).setAttribute("readonly",true);
+                                                    // document.getElementById("wet-"+mac).value=0;
+                                                    document.getElementById("wet-" + mac).setAttribute("disabled", true);
+                                                    document.getElementById("wet-" + mac).value = 0;
+                                                } else {
+                                                    // document.getElementById("wet-"+mac).removeAttribute("readonly");
+                                                    document.getElementById("wet-" + mac).removeAttribute("disabled");
+                                                }
+                                            };
+
+                                            function temp_c(mac) {
+                                                var tempc = document.getElementById("temp-c-" + mac).checked;
+                                                if (tempc == true) {
+                                                    // document.getElementById("temp-"+mac).setAttribute("readonly",true);
+                                                    // document.getElementById("temp-"+mac).value=0;
+                                                    document.getElementById("temp-" + mac).setAttribute("disabled", true);
+                                                    document.getElementById("temp-" + mac).value = 0;
+                                                } else {
+                                                    // document.getElementById("temp-"+mac).removeAttribute("readonly");
+                                                    document.getElementById("temp-" + mac).removeAttribute("disabled");
+                                                }
+                                            };
+
+                                            function pm_c(mac) {
+                                                var pmc = document.getElementById("pm-c-" + mac).checked;
+                                                if (pmc == true) {
+                                                    // document.getElementById("pm-"+mac).setAttribute("readonly",true);
+                                                    // document.getElementById("pm-"+mac).value=0;
+                                                    document.getElementById("pm-" + mac).setAttribute("disabled", true);
+                                                    document.getElementById("pm-" + mac).value = 0;
+                                                } else {
+                                                    // document.getElementById("pm-"+mac).removeAttribute("readonly");
+                                                    document.getElementById("pm-" + mac).removeAttribute("disabled");
+                                                }
+                                            };
+
+                                            function co2_c(mac) {
+                                                var co2c = document.getElementById("co2-c-" + mac).checked;
+                                                if (co2c == true) {
+                                                    // document.getElementById("co2-"+mac).setAttribute("readonly",true);
+                                                    // document.getElementById("co2-"+mac).value=0;
+                                                    document.getElementById("co2-" + mac).setAttribute("disabled", true);
+                                                    document.getElementById("co2-" + mac).value = 0;
+                                                } else {
+                                                    // document.getElementById("co2-"+mac).removeAttribute("readonly");
+                                                    document.getElementById("co2-" + mac).removeAttribute("disabled");
+                                                }
+                                            };
+
+                                            function cha_c(mac) {
+                                                var chac = document.getElementById("cha-c-" + mac).checked;
+                                                if (chac == true) {
+                                                    // document.getElementById("cha-"+mac).setAttribute("readonly",true);
+                                                    // document.getElementById("cha-"+mac).value=0;
+                                                    document.getElementById("cha-" + mac).setAttribute("disabled", true);
+                                                    document.getElementById("cha-" + mac).value = 0;
+                                                } else {
+                                                    // document.getElementById("cha-"+mac).removeAttribute("readonly");
+                                                    document.getElementById("cha-" + mac).removeAttribute("disabled");
+                                                }
+                                            };
+
+                                            function tvoc_c(mac) {
+                                                var tvocc = document.getElementById("tvoc-c-" + mac).checked;
+                                                if (tvocc == true) {
+                                                    // document.getElementById("tvoc-"+mac).setAttribute("readonly",true);
+                                                    // document.getElementById("tvoc-"+mac).value=0;
+                                                    document.getElementById("tvoc-" + mac).setAttribute("disabled", true);
+                                                    document.getElementById("tvoc-" + mac).value = 0;
+                                                } else {
+                                                    // document.getElementById("tvoc-"+mac).removeAttribute("readonly");
+                                                    document.getElementById("tvoc-" + mac).removeAttribute("disabled");
+                                                }
+                                            };
+
+                                            function wat_c(mac) {
+                                                var watc = document.getElementById("wat-c-" + mac).checked;
+                                                if (watc == true) {
+                                                    // document.getElementById("wat-"+mac).setAttribute("readonly",true);
+                                                    // document.getElementById("wat-"+mac).value=0;
+                                                    document.getElementById("wat-" + mac).setAttribute("disabled", true);
+                                                    document.getElementById("wat-" + mac).value = 0;
+                                                } else {
+                                                    // document.getElementById("wat-"+mac).removeAttribute("readonly");
+                                                    document.getElementById("wat-" + mac).removeAttribute("disabled");
+                                                }
+                                            };
+
+                                        </script>
+
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">確認</button>
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">取消</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>
+                        function airquality_threshold(mac) {
+                            var wet = parseInt(document.getElementById("wet-" + mac).value);
+                            var wetc = document.getElementById("wet-c-" + mac).checked;
+                            var temp = parseInt(document.getElementById("temp-" + mac).value);
+                            var tempc = document.getElementById("temp-c-" + mac).checked;
+                            var pm = parseInt(document.getElementById("pm-" + mac).value);
+                            var pmc = document.getElementById("pm-c-" + mac).checked;
+                            var co2 = parseInt(document.getElementById("co2-" + mac).value);
+                            var co2c = document.getElementById("co2-c-" + mac).checked;
+                            var cha = parseInt(document.getElementById("cha-" + mac).value);
+                            var chac = document.getElementById("cha-c-" + mac).checked;
+                            var tvoc = parseInt(document.getElementById("tvoc-" + mac).value);
+                            var tvocc = document.getElementById("tvoc-c-" + mac).checked;
+                            var wat = parseInt(document.getElementById("wat-" + mac).value);
+                            var watc = document.getElementById("wat-c-" + mac).checked;
+                            if (wetc == true) {
+                                wet = 'NULL';
+                            }
+                            if (tempc == true) {
+                                temp = 'NULL';
+                            }
+                            if (pmc == true) {
+                                pm = 'NULL';
+                            }
+                            if (co2c == true) {
+                                co2 = 'NULL';
+                            }
+                            if (chac == true) {
+                                cha = 'NULL';
+                            }
+                            if (tvocc == true) {
+                                tvoc = 'NULL';
+                            }
+                            if (watc == true) {
+                                wat = 'NULL';
+                            }
+                            // console.log(wet + "/" + temp + "/" + pm + "/" + co2 + "/" + cha + "/" + tvoc + "/" + wat);
+                            $.post("/modify/threshold", { type: 'airquality', mac:mac, wet:wet, temp:temp, pm:pm, co2:co2, cha:cha, tvoc:tvoc, wat:wat}, function (data) {
+                                if (data == "修改告警值成功") {
+                                    // location.reload();
+                                    $("#threshold-"+mac).modal('hide');
+                                    setTimeout(function(){
+                                        gothreshold('6','空氣質量');
+                                    },200);
+                                } else {
+                                    alert("修改告警值失敗");
+                                }
+                            }, "text");
+                        }
+                    </script>
+
+                </td>
+
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+
+    <script>
+
+        $(document).ready(function () {
+            $('#example').DataTable({
+                language: {
+                    search: "搜尋：",
+                    sProcessing: "处理中...",
+                    sLengthMenu: "显示 _MENU_ 项结果",
+                    sZeroRecords: "没有匹配结果",
+                    sInfo: "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                    sInfoEmpty: "显示第 0 至 0 项结果，共 0 项",
+                    sInfoFiltered: "(由 _MAX_ 项结果过滤)",
+                    sInfoPostFix: "",
+                    sSearch: "搜索:",
+                    sEmptyTable: "表中数据为空",
+                    sLoadingRecords: "载入中...",
+                    sInfoThousands: ",",
+                    oPaginate: {
+                        sFirst: "首页",
+                        sPrevious: "上页",
+                        sNext: "下页",
+                        sLast: "末页"
+                    },
+                    oAria: {
+                        "sSortAscending": ": 以升排列",
+                        "sSortDescending": ": 以降排列"
+                    }
+                }
+            });
+        });
+    </script>
+
+    <% } %>
+</div>

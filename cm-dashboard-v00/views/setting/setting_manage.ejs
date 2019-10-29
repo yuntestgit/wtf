@@ -1,0 +1,194 @@
+<div id="main" style="height:850px;overflow-y:scroll">
+
+    <button type="button" class="btn btn-primary" style="float: right;margin-top: 10px;margin-right: 10px"
+        data-toggle="modal" data-target="#createuser">新增帳號</button>
+    <!-- Modal-create -->
+    <div class="modal fade" id="createuser" tabindex="-1" role="dialog" aria-labelledby="createLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:800px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createLabel">新增帳號</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form style="text-align: left" action="javascript:createvalue_user('user')">
+                        <label for="account" class="col-form-label">帳號：</label>
+                        <input type="text" class="form-control" id="account" required>
+                        <label for="password" class="col-form-label">密碼:</label>
+                        <input type="password" class="form-control" id="password" required>
+                        <label for="username" class="col-form-label">姓名:</label>
+                        <input type="text" class="form-control" id="username" required>
+                        <label for="email" class="col-form-label">電子信箱:</label>
+                        <input type="email" class="form-control" id="email" required>
+                        <label for="phone" class="col-form-label">聯絡電話:</label>
+                        <input type="phone" class="form-control" id="phone" required>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                            <button type="submit" class="btn btn-primary">確認</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table id="manaagetable">
+        <thead>
+            <tr>
+                <th>帳號</th>
+                <th>密碼</th>
+                <th>姓名</th>
+                <th>電子信箱</th>
+                <th>聯絡電話</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(x=0;x<user.length;x++) {%>
+            <tr>
+                <td><%= user[x].Account %></td>
+                <td>*******</td>
+                <td><%= user[x].Username %></td>
+                <td><%= user[x].Email %></td>
+                <td><%= user[x].Phone %></td>
+                <td><button type="button" class="btn btn-info" data-toggle="modal"
+                        data-target="#modal-<%= user[x].Account %>-mod">修改</button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="modal-<%= user[x].Account %>-mod" tabindex="-1" role="dialog"
+                        aria-labelledby="<%= user[x].Account %>-Label-mod" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:800px">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="<%= user[x].Account %>-Label-mod">
+                                        修改　<span
+                                            style="font-size: 25px;font-style:italic"><%= user[x].Account %></span>　資料
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form style="text-align: left">
+                                        <label for="account_modify<%= user[x].Account %>"
+                                            class="col-form-label">帳號：</label>
+                                        <input type="text" class="form-control" value="<%= user[x].Account %>"
+                                            id="account_modify<%= user[x].Account %>" readonly>
+                                        <label for="password_modify<%= user[x].Account %>"
+                                            class="col-form-label">密碼:</label>
+                                        <input type="password" class="form-control" value="<%= user[x].Password %>"
+                                            id="password_modify<%= user[x].Account %>">
+                                        <label for="username_modify<%= user[x].Account %>"
+                                            class="col-form-label">姓名:</label>
+                                        <input type="text" class="form-control" value="<%= user[x].Username %>"
+                                            id="username_modify<%= user[x].Account %>">
+                                        <label for="email_modify<%= user[x].Account %>"
+                                            class="col-form-label">電子信箱:</label>
+                                        <input type="email" class="form-control" value="<%= user[x].Email %>"
+                                            id="email_modify<%= user[x].Account %>">
+                                        <label for="phone_modify<%= user[x].Account %>"
+                                            class="col-form-label">聯絡電話:</label>
+                                        <input type="phone" class="form-control" value="<%= user[x].Phone %>"
+                                            id="phone_modify<%= user[x].Account %>">
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                                    <button type="button" class="btn btn-primary"
+                                        onclick="modifyvalue_user('user','<%= user[x].Account %>')"
+                                        data-dismiss="modal">確認</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td><button type="button" class="btn btn-secondary" data-toggle="modal"
+                        data-target="#modal-<%= user[x].Account %>-del">刪除</button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="modal-<%= user[x].Account %>-del" tabindex="-1" role="dialog"
+                        aria-labelledby="<%= user[x].Account %>-Label-del" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:800px">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="<%= user[x].Account %>-Label-del">
+                                        刪除　<span
+                                            style="font-size: 25px;font-style:italic"><%= user[x].Account %></span>　資料
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form style="text-align: left">
+                                        <label for="account_delete<%= user[x].Account %>"
+                                            class="col-form-label">帳號：</label>
+                                        <input type="text" class="form-control" value="<%= user[x].Account %>"
+                                            id="account_delete<%= user[x].Account %>" readonly>
+                                        <label for="password_delete<%= user[x].Account %>"
+                                            class="col-form-label">密碼:</label>
+                                        <input type="password" class="form-control" value="<%= user[x].Password %>"
+                                            id="password_delete<%= user[x].Account %>" readonly>
+                                        <label for="username_delete<%= user[x].Account %>"
+                                            class="col-form-label">姓名:</label>
+                                        <input type="text" class="form-control" value="<%= user[x].Username %>"
+                                            id="username_delete<%= user[x].Account %>" readonly>
+                                        <label for="email_delete<%= user[x].Account %>"
+                                            class="col-form-label">電子信箱:</label>
+                                        <input type="email" class="form-control" value="<%= user[x].Email %>"
+                                            id="email_delete<%= user[x].Account %>" readonly>
+                                        <label for="phone_delete<%= user[x].Account %>"
+                                            class="col-form-label">聯絡電話:</label>
+                                        <input type="phone" class="form-control" value="<%= user[x].Phone %>"
+                                            id="phone_delete<%= user[x].Account %>" readonly>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                                    <button type="button" class="btn btn-primary"
+                                        onclick="deletevalue_user('user','<%= user[x].Account %>')"
+                                        data-dismiss="modal">確認</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+    <script>
+            $(document).ready(function () {
+                $('#manaagetable').DataTable({
+                    language: {
+                        search: "搜尋：",
+                        sProcessing: "处理中...",
+                        sLengthMenu: "显示 _MENU_ 项结果",
+                        sZeroRecords: "没有匹配结果",
+                        sInfo: "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                        sInfoEmpty: "显示第 0 至 0 项结果，共 0 项",
+                        sInfoFiltered: "(由 _MAX_ 项结果过滤)",
+                        sInfoPostFix: "",
+                        sSearch: "搜索:",
+                        sEmptyTable: "表中数据为空",
+                        sLoadingRecords: "载入中...",
+                        sInfoThousands: ",",
+                        oPaginate: {
+                            sFirst: "首页",
+                            sPrevious: "上页",
+                            sNext: "下页",
+                            sLast: "末页"
+                        },
+                        oAria: {
+                            "sSortAscending": ": 以升排列",
+                            "sSortDescending": ": 以降排列"
+                        }
+                    }
+                });
+            });
+        </script>
+</div>

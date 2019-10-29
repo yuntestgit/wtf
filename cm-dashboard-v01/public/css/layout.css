@@ -1,0 +1,136 @@
+* {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	list-style-type: none;
+}
+
+html {
+	font-size: 25px;
+	font-family: 微軟正黑體;
+}
+
+body {
+	overflow-y: scroll;
+	background-color: #000;
+}
+
+.wrapper {
+	width: 100%;
+	/* max-width: 1600px; */
+	margin-left: auto;
+	margin-right: auto;
+	
+	background-color: #ccc;
+}
+
+/* #region [blue] header */
+.header {
+	position: relative;
+	font-size: 0;
+}
+
+.header > div {
+	display: inline-block;
+}
+
+.header > .logoContainer {
+	vertical-align: top;
+	width: 300px;
+	
+	background-color: #ffc;
+}
+
+.header > .logoContainer > img {
+	cursor: pointer;
+	margin: 15px;
+}
+
+.header > .text {
+	vertical-align: bottom;
+	margin-left: 20px;
+	margin-bottom: 15px;
+	font-size: 1rem;
+	font-weight: 600;
+	
+	background-color: #fcf;
+}
+
+.header > .operatingArea {
+	position: absolute;
+	bottom: 18px;
+	right: 15px;
+	
+	background-color: #cff;
+}
+
+.header > .underLine {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: calc(100% - 30px);
+	height: 3px;
+	
+	background-color: #e17f10;
+}
+
+.header > .operatingArea > .iconButton {
+	margin-right: 20px;
+}
+
+.header > .operatingArea > .iconButton:last-child {
+	margin-right: 0;
+}
+/* #endregion [blue] */
+
+/* #region [purple] */
+.bodyContainer {
+	background-color: #ccf;
+	font-size: 0;
+}
+
+.bodyContainer > div {
+	display: inline-block;
+	vertical-align: top;
+	font-size: 1rem;
+}
+
+.bodyContainer > .sidebar {
+	box-sizing: border-box;
+	width: 300px;
+	padding: 20px;
+	background-color: #fcc;
+}
+
+.bodyContainer > .sidebar > .sideMenu {
+	margin-bottom: 25px;
+}
+
+.bodyContainer > .sidebar > .sideMenu:last-child {
+	margin-bottom: 0px;
+}
+
+.bodyContainer > .main {
+	width: calc(100% - 300px);
+	background-color: #cfc;
+	padding: 20px;
+	box-sizing: border-box;
+}
+
+.trapezoid-navbar {
+	width: 34rem;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 20px;
+}
+
+.trapezoid-box-container {
+	width: calc(9.6rem * 3);
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.trapezoid-box {
+	margin: 10px;	
+}
+/* #endregion [purple] */

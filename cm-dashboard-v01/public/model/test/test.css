@@ -1,0 +1,40 @@
+#test {
+	margin-bottom: 20px;
+	background-color: #fff;
+	box-sizing: border-box;
+	border: 2px solid #000;
+}
+
+#test > .text {
+	display: inline-block;
+}
+
+#test > .setOrange {
+	display: inline-block;
+	background-color: #e17f10;
+	width: 2em;
+	height: 1em;
+}
+
+#test > .setBlack {
+	display: inline-block;
+	background-color: #000;
+	width: 2em;
+	height: 1em;
+}
+
+.sideMenu.colorBlack > .title {
+	color: #000;
+}
+
+.sideMenu.colorBlack > ul > li {
+	color: #000;
+}
+
+.sideMenu.colorOrange > .title {
+	color: #e17f10;
+}
+
+.sideMenu.colorOrange > ul > li {
+	color: #e17f10;
+}
