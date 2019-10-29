@@ -1,0 +1,20 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	font-size: 25px;
+}
+
+body {
+	background-color: #777;
+}
+
+.container {
+	width: calc(9.6rem * 3);
+}
+
+.trapezoidBox {
+	margin: 10px;	
+}

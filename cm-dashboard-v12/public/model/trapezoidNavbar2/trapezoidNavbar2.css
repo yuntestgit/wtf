@@ -1,0 +1,73 @@
+.trapezoidNavbar {
+	display: inline-block;
+	font-size: 0;
+	min-width: 8rem;
+}
+
+.trapezoidNavbar > .item {
+	box-sizing: border-box;
+	display: inline-block;
+	text-align: center;
+	margin: 2px;
+	width: 6rem;
+	height: 100%;
+	font-size: 0.75rem;
+	background-color: #fff;
+	border-radius: 0;
+}
+
+.trapezoidNavbar > .item.left {
+	border-top-left-radius: 0.5rem;
+	border-bottom-left-radius: 0.5rem;
+}
+
+.trapezoidNavbar > .item.right {
+	border-top-right-radius: 0.5rem;
+	border-bottom-right-radius: 0.5rem;
+}
+
+@media screen and (max-width: 810px) /* trapezoidNavbar {width + marginLeft + marginRight} */ {
+	.trapezoidNavbar > .item {
+		width: 100%;
+		border-radius: 0.5rem;
+	}
+}
+
+.trapezoidNavbar > .item > img {
+	margin-right: 0.25rem;
+	height: 1.5rem;
+	max-width: 2rem; /* width limit*/
+	vertical-align: middle;
+}
+
+.trapezoidNavbar > .item > .image {
+	display: inline;
+}
+
+.trapezoidNavbar > .item > .image-active {
+	display: none;
+}
+
+.trapezoidNavbar > .item > .text {
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 0.75rem;
+	line-height: 4;
+	font-family: 微軟正黑體;
+	font-weight: 700;
+	color: #444;
+}
+
+.trapezoidNavbar > .item.active {
+	background-color: #ec8200;
+}
+.trapezoidNavbar > .item.active > .text {
+	color: #fff;
+}
+
+.trapezoidNavbar > .item.active > .image-active {
+	display: inline;
+}
+.trapezoidNavbar > .item.active > .image {
+	display: none;
+}

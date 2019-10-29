@@ -1,0 +1,41 @@
+<!-- starU -->
+
+<div class="sidebar" id="navbar">
+  <% if(floor[0].Number == null ) {%>
+    <% if (language==0){%>
+    <span>暫無資料<br>請點擊右上方<br>設置新增資料</span>
+    <% }else if (language==1){%>
+    <span>暂无资料<br>请点击右上方<br>设置新增资料</span>
+    <% }else if (language==2){%>
+    <span>No data available<br>Please click on the upper right<br>Set new information</span>
+    <% }%>
+  <% }else{ %>
+    <% for(var nf=0;nf< floor.length;nf++) {%>
+      <div class="sideMenuContainer">
+        <div class="sideMenu expanded">
+          <div class="title" id="floor<%= floor[nf].Number %>"><%= floor[nf].Number %> 樓</div>
+          <ul>
+            <% for(var nr=0;nr<room.length;nr++) {%>
+              <% if(room[nr].FloorNumber == floor[nf].Number) {%>
+                <li>
+                  <div class="sideMenu expanded">
+                    <div class="title" id="room<%= room[nr].Number %>"><%= room[nr].Number %> 房號</div>
+                    <ui>
+                        <% for(var wp=0;wp<patient.length;wp++) {%>
+                            <% if(patient[wp].Room == room[nr].Number) {%>
+                              <!-- <li> -->
+                                  <a onclick="getpatientdata('<%= room[nr].FloorNumber %>','<%= patient[wp].Room %>','<%= patient[wp].Username %>')"><%= patient[wp].Username %></a><br>
+                              <!-- </li> -->
+                            <% } %>
+                        <% } %>
+                    </ui>
+                  </div>
+                </li>
+              <% } %>
+            <% } %>
+          </ul>
+        </div>
+      </div>
+    <% } %>
+  <% } %>
+</div>

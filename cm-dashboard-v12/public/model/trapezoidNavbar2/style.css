@@ -1,0 +1,22 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	font-size: 25px;
+}
+
+body {
+	background-color: #777;
+}
+
+.trapezoidNavbar {
+	margin: 20px;
+}
+
+.inline-block-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

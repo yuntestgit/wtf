@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>室內設備頁</title>
+		<link rel="stylesheet" type="text/css" href="style.css" />
+		<link rel="stylesheet" type="text/css" href="insideDevice.css" />
+		<link rel="stylesheet" type="text/css" href="../trapezoidSwitch/trapezoidSwitch.css" />
+	</head>
+
+	<body>
+		<div class="insideDeviceContainer">
+			<div class="controller">
+				<table>
+					<tr>
+						<td class="deviceImage">
+							<img src="pic/air-condition.png" alt="冷氣">
+						</td>
+
+						<td class="deviceItem">冷氣</td>
+
+						<td class="situation">
+							<div class="trapezoidSwitch on">
+								<div class="item left">
+									<div class="content">
+										<div class="text">on</div>
+									</div>
+								</div>
+
+								<div class="item right">
+									<div class="content">
+										<div class="text">off</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="temperature">
+								<div class="value borderColumn">66</div>
+								<div class="unit">°C</div>
+							</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td class="deviceImage"><img src="pic/light.png" alt="燈光"></td>
+
+						<td class="deviceItem">燈光</td>
+
+						<td class="situation">
+							<div class="trapezoidSwitch on">
+								<div class="item left">
+									<div class="content">
+										<div class="text">on</div>
+									</div>
+								</div>
+
+								<div class="item right">
+									<div class="content">
+										<div class="text">off</div>
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td class="deviceImage"></td>
+
+						<td class="deviceItem">空氣濕度</td>
+
+						<td class="situation">
+							<div class="value">66</div>
+							<div class="unit">%</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+
+			<div class="data">
+				<table>
+					<tr>
+						<td class="th">空氣品質</td>
+						<td class="value">%50%</td>
+						<td class="unit">AQI</td>
+					</tr>
+
+					<tr>
+						<td class="th">PM₂.₅濃度</td>
+						<td class="value">%17%</td>
+						<td class="unit">μg/m³</td>
+					</tr>
+
+					<tr>
+						<td class="th">PM₁₀濃度</td>
+						<td class="value">%48%</td>
+						<td class="unit">μg/m³</td>
+					</tr>
+
+					<tr>
+						<td class="th">CO濃度</td>
+						<td class="value">%48%</td>
+						<td class="unit">ppm</td>
+					</tr>
+
+					<tr>
+						<td class="th">SO₂濃度</td>
+						<td class="value">%1.5%</td>
+						<td class="unit">ppb</td>
+					</tr>
+
+					<tr>
+						<td class="th">NO₂濃度</td>
+						<td class="value">%3.2%</td>
+						<td class="unit">ppb</td>
+					</tr>
+
+					<tr>
+						<td class="th">O₃濃度</td>
+						<td class="value">%3.2%</td>
+						<td class="unit">ppb</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<script type="text/javascript" src="../trapezoidSwitch/trapezoidSwitch.js"></script>
+		<!-- <script type="text/javascript" src="tool/jquery/jquery-3.4.1.min.js"></script> -->
+		<!-- <script type="text/javascript" src="main.js"></script> -->
+	</body>
+</html>

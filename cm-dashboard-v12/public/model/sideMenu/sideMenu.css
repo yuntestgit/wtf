@@ -1,0 +1,58 @@
+.sideMenu > .title {
+	box-sizing: border-box;
+	position: relative;
+	cursor: default;
+	padding: 5px;
+	font-size: 0.7rem;
+	font-weight: 600;
+	color: #000;
+	border-bottom: 2px solid #e17f10;
+}
+
+/* #region sideMenu - triangle */
+.sideMenu > .title::before {
+	display: inline-block;
+	content: '';
+	position: absolute;
+	top: 10px;
+	right: 5px;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 15px 10px 0 10px;
+	border-color: #e17f10 transparent transparent transparent;
+}
+
+.sideMenu.expanded > .title::before {
+	display: none;
+}
+
+.sideMenu > .title::after {
+	display: none;
+	content: '';
+	position: absolute;
+	top: 10px;
+	right: 5px;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 0 10px 15px 10px;
+	border-color: transparent transparent #e17f10 transparent;
+}
+
+.sideMenu.expanded > .title::after {
+	display: inline-block;
+}
+/* #endregion */
+
+.sideMenu > ul > li {
+	box-sizing: border-box;
+	cursor: default;
+	margin-left: 30px;
+	padding:7px 3px 3px 3px;
+	width: calc(100% - 30px);
+	font-size: 0.6rem;
+	font-weight: 500;
+	color: #000;
+	border-bottom: 2px solid #e17f10;
+}
